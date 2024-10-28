@@ -28,8 +28,8 @@ SECRET_KEY = 'django-insecure-)*dq9edp%y3!laxxqm9s=w6svh4s78xy0(urxv75=kqju5oy_a
 DEBUG = True
 # DEBUG = False
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
 
 
 # Application definition
@@ -40,9 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-      
-    'rest_framework',  
+    'django.contrib.staticfiles', 
     'life',
 ]
 

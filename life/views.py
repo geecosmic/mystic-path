@@ -1,7 +1,7 @@
 # api/views.py
-from rest_framework.response import Response
+# from rest_framework.response import Response
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+# from rest_framework.decorators import api_view
 from .utils import reduce_to_single_digit,get_period_for_day_and_time
 from datetime import datetime
 from datetime import datetime, timedelta
