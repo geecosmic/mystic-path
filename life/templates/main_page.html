@@ -80,6 +80,9 @@ html {
     visibility: visible;
     opacity: 1;
 }
+span{
+  font-weight: 800;
+}
 </style>
 
 
@@ -88,6 +91,12 @@ html {
 <body>
     {%include "nav.html"%}
 <h4 class="text-center pt-3">Current Period for {{ today }}: <b class="text-warning h1">{{ current_period_letter }}</b></h4>
+<br>
+
+<h6 class="text-center">Current Time: <span class="text-warning" id="clock"></span></h6>
+
+
+
 <br>
 
 <center class="pt-3">
@@ -251,15 +260,23 @@ html {
   </div> <br><br>
 
 {% include "footer.html"%}
-  <!-- <script>
-    document.getElementById('yearcyclebutton').onclick = function(event) {
-    event.preventDefault();
-    const targetPosition = document.getElementById('yearcycle').offsetTop;
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-};
+  
 
-  </script> -->
-
+<script>
+  function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+      
+      document.getElementById('clock').textContent =formattedTime;
+  }
+  
+  // Update the clock every second
+  setInterval(updateClock, 1000);
+  updateClock(); // Initial call to display time immediately
+</script>
 
 
  
