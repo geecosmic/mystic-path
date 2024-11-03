@@ -9,7 +9,7 @@ def reduce_to_single_digit(n):
     
     return n
 
-# utils.py
+
 from datetime import datetime, timedelta
 
 def get_yearly_cycle(month_input, date_input):
@@ -197,26 +197,18 @@ def hebrew_date_info():
 
 # ----------for PERIODS EVERYWHERE ------------------------------
 
-from datetime import datetime
+# utils.py
+from datetime import datetime, timedelta
+import pytz
 
-def get_period_for_day_and_time(now=None):
-    """
-    Determines the current period based on the time of the day and the day of the week.
-    
-    :param now: A datetime object representing the current time. If None, it uses the current time.
-    :return: A tuple containing the current day, period letter, and period index.
-    """
-    if now is None:
-        now = datetime.now()  # Use current time if not provided
+def get_period_for_day_and_time(timezone='UTC'):
+    now = datetime.now(pytz.timezone(timezone))
 
-    # Define the length of each period in seconds (7 periods in a day)
-    period_length_in_seconds = (24 * 60 * 60) // 7
-    start_time = datetime(now.year, now.month, now.day, 0, 0)  # Midnight of the current day
+    # Calculate the precise length of each period in seconds (7 periods in a day)
+    period_length_in_seconds = 86400 / 7  # 86400 seconds in 24 hours, divided by 7 periods
 
-    # Calculate the elapsed time since midnight for the current day
+    start_time = now.replace(hour=0, minute=0, second=0, microsecond=0)  # Midnight of the current day
     elapsed_time_in_seconds = (now - start_time).total_seconds()
-
-    # Determine which period we are in (0-6, corresponding to A-G)
     period_index = int(elapsed_time_in_seconds // period_length_in_seconds)
 
     # Period mappings for each day
@@ -230,16 +222,54 @@ def get_period_for_day_and_time(now=None):
         'Saturday': ['D', 'E', 'F', 'G', 'A', 'B', 'C'],
     }
 
-    # Get the current day of the week
     today = now.strftime("%A")
-
-    # Get the period sequence for the current day
     periods = period_mappings.get(today, ['Invalid'])
-
-    # Determine the current period letter
     current_period_letter = periods[period_index] if 0 <= period_index < len(periods) else "Invalid period"
 
     return today, current_period_letter, period_index
+# -----------------------------------------------------------------
 
-# Example usage:
-# current_day, current_period_letter, current_period_index = get_period_for_day_and_time()
+
+# def get_period_for_day_and_time(now=None):
+#     """
+#     Determines the current period based on the time of the day and the day of the week.
+    
+#     :param now: A datetime object representing the current time. If None, it uses the current time.
+#     :return: A tuple containing the current day, period letter, and period index.
+#     """
+#     if now is None:
+#         now = datetime.now()  # Use current time if not provided
+
+#     # Define the length of each period in seconds (7 periods in a day)
+#     period_length_in_seconds = (24 * 60 * 60) // 7
+#     start_time = datetime(now.year, now.month, now.day, 0, 0)  # Midnight of the current day
+
+#     # Calculate the elapsed time since midnight for the current day
+#     elapsed_time_in_seconds = (now - start_time).total_seconds()
+
+#     # Determine which period we are in (0-6, corresponding to A-G)
+#     period_index = int(elapsed_time_in_seconds // period_length_in_seconds)
+
+#     # Period mappings for each day
+#     period_mappings = {
+#         'Sunday': ['G', 'A', 'B', 'C', 'D', 'E', 'F'],
+#         'Monday': ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+#         'Tuesday': ['F', 'G', 'A', 'B', 'C', 'D', 'E'],
+#         'Wednesday': ['B', 'C', 'D', 'E', 'F', 'G', 'A'],
+#         'Thursday': ['E', 'H', 'C', 'A', 'B', 'C', 'D'],
+#         'Friday': ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+#         'Saturday': ['D', 'E', 'F', 'G', 'A', 'B', 'C'],
+#     }
+
+#     # Get the current day of the week
+#     today = now.strftime("%A")
+
+#     # Get the period sequence for the current day
+#     periods = period_mappings.get(today, ['Invalid'])
+
+#     # Determine the current period letter
+#     current_period_letter = periods[period_index] if 0 <= period_index < len(periods) else "Invalid period"
+
+#     return today, current_period_letter, period_index
+
+

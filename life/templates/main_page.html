@@ -90,8 +90,15 @@ span{
 
 <body>
     {%include "nav.html"%}
-<h4 class="text-center pt-3">Current Period for {{ today }}: <b class="text-warning h1">{{ current_period_letter }}</b></h4>
+<!-- <h4 class="text-center pt-3">Current Period for {{ today }}: <b class="text-warning h1">{{ current_period_letter }}</b></h4> -->
+
+
+<h4 class="text-center pt-3">
+  Current Period for {{ today }}: <b class="text-warning h1">{{ current_period_letter }}</b>
+</h4>
+
 <br>
+
 
 <h6 class="text-center">Current Time: <span class="text-warning" id="clock"></span></h6>
 
@@ -279,8 +286,36 @@ span{
 </script>
 
 
- 
+<!-- script for timezone  ---------------- -->
 
+<script>
+  // Get the user's timezone
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Set timezone cookie if it’s not already set
+  if (document.cookie.indexOf('timezone') === -1) {
+      document.cookie = `timezone=${userTimezone}; path=/; max-age=31536000`;  // Expires in 1 year
+      // Reload the page to apply the timezone immediately
+      location.reload();
+  }
+</script>
+
+
+<!-- <script>
+  // Get the user's timezone
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Send an AJAX request to the Django backend to get the period data
+  fetch(`/get_period/?timezone=${userTimezone}`)
+      .then(response => response.json())
+      .then(data => {
+          // Use the data returned from Django (day, period_letter, period_index)
+          document.getElementById('period-display').innerText = `Today is ${data.day}, current period is ${data.period_letter} (Period Index: ${data.period_index})`;
+      })
+      .catch(error => console.error('Error fetching period:', error));
+</script> -->
+
+<!-- ---------------------------------------- -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>  
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>  

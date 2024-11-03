@@ -19,6 +19,10 @@ urlpatterns = [
 
     
     # path('main_page', views.main_page, name='main_page'),
+    # path('get_period/', views.get_period_view, name='get_period'),
+    path('get_period/', views.get_period_view, name='get_period'),
+
+    path('get-period/', views.get_period, name='get_period'),
     path('main_page', views.main_page, name='main_page'),  # Default view without a selected period
     path('<int:id>/', views.main_page, name='main_page_with_detail'),  # View with a selected period
 

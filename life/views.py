@@ -9,10 +9,53 @@ from django.views.generic import View,ListView,CreateView,DetailView,UpdateView
 from .forms import DateConversionForm
 from django.shortcuts import render, get_object_or_404
 from .models import Period
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+from django.views.decorators.csrf import csrf_exempt
+from .utils import get_period_for_day_and_time
+import pytz
+from django.views.decorators.http import require_http_methods
+
 # from .forms import CustomUserCreationForm
 
+def get_period_view(request):
+    # Read the timezone from the cookie
+    timezone = request.COOKIES.get('timezone', 'UTC')  # Default to UTC if no timezone cookie is found
 
+    # Call the function to get the period data
+    today, period_letter, period_index = get_period_for_day_and_time(timezone=timezone)
 
+    # Render your template with the period information
+    return JsonResponse({
+        'day': today,
+        'period_letter': period_letter,
+        'period_index': period_index,
+    })
+
+@csrf_exempt
+def get_period(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        timezone = data.get('timezone', 'UTC')  # Default to UTC if no timezone provided
+
+        try:
+            # Validate the timezone
+            pytz.timezone(timezone)
+        except pytz.UnknownTimeZoneError:
+            return JsonResponse({"error": "Invalid Time Zone"}, status=400)
+
+        # Get the period based on the provided timezone
+        today, period_letter, period_index = get_period_for_day_and_time(timezone=timezone)
+
+        return JsonResponse({
+            'day': today,
+            'period_letter': period_letter,
+            'period_index': period_index
+        })
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
 def privacy_page(request):
@@ -22,6 +65,8 @@ def privacy_page(request):
 
 
 def main_page(request, id=None):
+
+    timezone = request.COOKIES.get('timezone', 'UTC')
     # --------------------yearly_cycle------------------
 
     start_date = None
@@ -63,12 +108,12 @@ def main_page(request, id=None):
                 period_index += 1
 
     # --------------------yearly_cycle- ends-------------------
-    today, current_period_letter, period_index = get_period_for_day_and_time()
+
+    today, current_period_letter, period_index = get_period_for_day_and_time(timezone=timezone)
 
     periods = Period.objects.all()  # Retrieve all periods
     period = None
 
-    # Check if an id is provided in the URL to load the details
     if id:
         period = get_object_or_404(Period, id=id)
 
