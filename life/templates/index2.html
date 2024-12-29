@@ -11,12 +11,13 @@
     <title>Life Numbers</title>
 
     {% include 'ads.html' %}
-  </head>
+
+
     <style>
       body{
         background-color: black;
         color: azure;
-        /* padding: 10px; */
+        margin: auto;
         overflow-x: hidden;
       }
       input{
@@ -43,16 +44,22 @@
         width: 170px;
       }
     </style>
+
+
+  </head>
+    
  
-  <body>
+
+
+<body>
     {% include "nav.html"%}
 
-    {% include "ads_body.html"%}
    
-<div class="container">
-  <h4 class="mt-4 mb-3 text-light"><center>Universal year Number (Current Year) for {{current_yearx}} is : <b class="text-warning h2">{{current_year}}</b></center></h4>
-</div>  
-<br>
+<div class="container-fluid"  style="height: 100vh;">
+  <div>
+    <h4 class="mt-4 mb-3 text-light"><center>Universal year Number (Current Year) for {{current_yearx}} is : <b class="text-warning h2">{{current_year}}</b></center></h4>
+  </div>  
+  <br>
   <div class="container-fluid mt-4 text-center">
     <div class="row">
       <div class="col-sm-3 colo">
@@ -162,9 +169,28 @@
     {% if result_destiny %}
         <h2 id='result-heading' class="mt-4">Your Destiny Number is: <strong>{{ result_destiny }}</strong></h2>
     {% endif %}
-</div>
+  </div>
 
   <!-- ----------CALCULATIONS END----------------------- -->
+
+
+  
+<!-- <-------------------!-- ads-------------------------------------------- --> 
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5173311072173254"
+crossorigin="anonymous"></script>
+<!-- lifepathban1 -->
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="ca-pub-5173311072173254"
+data-ad-slot="4102051676"
+data-ad-format="auto"
+data-full-width-responsive="true"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<!-- -----------------------ad-ends----------------------------------------- -->
+
 
 
 <!-- <hr style="background-color: white; margin-bottom: 50px;"> -->
@@ -202,7 +228,6 @@
     
   
 </div>
-{% include "near_footer.html"%}
 <div class="container">
    
     <h4 class="mt-4 mb-3"><center>How To Calculate Your Personal Month Number</center></h4>
@@ -225,10 +250,13 @@
       In order to find your personal day number: add a number of the day to the 
       personal month number, in case of need - reduce the number to a single digit.
     </p>
-</div> <br><br>
-  </div>
-{% include "footer.html"%}
+</div> 
 
+<!-- <br><br> -->
+
+
+
+{% include 'footer.html' %}
 
 <script>
   function resetForms() {
@@ -251,16 +279,6 @@
 </script>
 
 
-  <!-- -------------------------------------------- -->
-
-  <!-- <script>
-    // Use jQuery to handle the button click event
-    $('#unhideButton').click(function() {
-        // Unhide the element by removing the 'hidden' class
-        $('#content').css('visibility', 'visible');
-        $('#content').css('border', '3px solid green');
-    });
-</script> -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </body>
-  </html>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
